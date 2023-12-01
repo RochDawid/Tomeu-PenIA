@@ -58,25 +58,14 @@ export function SidebarActions({
 
   const copyShareLink = useCallback(async (chat: Chat) => {
     if (!chat.sharePath) {
-      return toast.error("No s'ha pogut copiar l'enllaç 😓")
+      return toast.error("No s'ha pogut copiar l'enllaç")
     }
 
     const url = new URL(window.location.href)
     url.pathname = chat.sharePath
     navigator.clipboard.writeText(url.toString())
     setShareDialogOpen(false)
-    toast.success('Enllaç copiat amb èxit 🥳', {
-      style: {
-        borderRadius: '10px',
-        background: '#333',
-        color: '#fff',
-        fontSize: '14px'
-      },
-      iconTheme: {
-        primary: 'white',
-        secondary: 'black'
-      }
-    })
+    toast.success('Enllaç copiat')
   }, [])
 
   return (
@@ -203,7 +192,7 @@ export function SidebarActions({
                   setDeleteDialogOpen(false)
                   router.refresh()
                   router.push('/')
-                  toast.success('Xat eliminat 🗑️')
+                  toast.success('Xat eliminat')
                 })
               }}
             >

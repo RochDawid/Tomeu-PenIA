@@ -1,24 +1,23 @@
-"use client";
+'use client'
 
-import { useChat, type Message } from "ai/react";
+import { useChat, type Message } from 'ai/react'
 
-import { cn } from "@/lib/utils";
-import { ChatList } from "@/components/chat-list";
-import { ChatPanel } from "@/components/chat-panel";
-import { EmptyScreen } from "@/components/empty-screen";
-import { ChatScrollAnchor } from "@/components/chat-scroll-anchor";
-import { useLocalStorage } from "@/lib/hooks/use-local-storage";
-import { toast } from "react-hot-toast";
-import { usePathname, useRouter } from "next/navigation";
+import { ChatList } from '@/components/chat-list'
+import { ChatPanel } from '@/components/chat-panel'
+import { ChatScrollAnchor } from '@/components/chat-scroll-anchor'
+import { EmptyScreen } from '@/components/empty-screen'
+import { cn } from '@/lib/utils'
+import { usePathname, useRouter } from 'next/navigation'
+import { toast } from 'react-hot-toast'
 
-export interface ChatProps extends React.ComponentProps<"div"> {
-  initialMessages?: Message[];
-  id?: string;
+export interface ChatProps extends React.ComponentProps<'div'> {
+  initialMessages?: Message[]
+  id?: string
 }
 
 export function Chat({ id, initialMessages, className }: ChatProps) {
-  const router = useRouter();
-  const path = usePathname();
+  const router = useRouter()
+  const path = usePathname()
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
       initialMessages,
@@ -26,19 +25,19 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
       body: { id },
       onResponse(response) {
         if (response.status === 401) {
-          toast.error("Error creant el xat 🚫");
+          toast.error('Error creant el xat')
         }
       },
       onFinish() {
-        if (!path.includes("xat")) {
-          router.push(`/xat/${id}`, { shallow: true });
-          router.refresh();
+        if (!path.includes('xat')) {
+          router.push(`/xat/${id}`, { shallow: true })
+          router.refresh()
         }
-      },
-    });
+      }
+    })
   return (
     <>
-      <div className={cn("pb-[200px] pt-4 md:pt-10", className)}>
+      <div className={cn('pb-[200px] pt-4 md:pt-10', className)}>
         {messages.length ? (
           <>
             <ChatList messages={messages} />
@@ -59,5 +58,5 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         setInput={setInput}
       />
     </>
-  );
+  )
 }
