@@ -1,11 +1,10 @@
-'use client'
+"use client";
 
-import * as React from 'react'
-import { useRouter } from 'next/navigation'
-import { toast } from 'react-hot-toast'
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
-import { type Chat, ServerActionResult } from '@/lib/types'
-import { cn, formatDate } from '@/lib/utils'
+import { type Chat, ServerActionResult } from "@/lib/types";
+import { cn, formatDate } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,70 +13,71 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle
-} from '@/components/ui/alert-dialog'
-import { Button } from '@/components/ui/button'
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle
-} from '@/components/ui/dialog'
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   IconShare,
   IconSpinner,
   IconTrash,
-  IconUsers
-} from '@/components/ui/icons'
-import Link from 'next/link'
-import { badgeVariants } from '@/components/ui/badge'
+  IconUsers,
+} from "@/components/ui/icons";
+import Link from "next/link";
+import { badgeVariants } from "@/components/ui/badge";
 import {
   Tooltip,
   TooltipContent,
-  TooltipTrigger
-} from '@/components/ui/tooltip'
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { useCallback, useState, useTransition } from "react";
 
 interface SidebarActionsProps {
-  chat: Chat
-  removeChat: (args: { id: string; path: string }) => ServerActionResult<void>
-  shareChat: (chat: Chat) => ServerActionResult<Chat>
+  chat: Chat;
+  removeChat: (args: { id: string; path: string }) => ServerActionResult<void>;
+  shareChat: (chat: Chat) => ServerActionResult<Chat>;
 }
 
 export function SidebarActions({
   chat,
   removeChat,
-  shareChat
+  shareChat,
 }: SidebarActionsProps) {
-  const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false)
-  const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
-  const [isRemovePending, startRemoveTransition] = React.useTransition()
-  const [isSharePending, startShareTransition] = React.useTransition()
-  const router = useRouter()
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [isRemovePending, startRemoveTransition] = useTransition();
+  const [isSharePending, startShareTransition] = useTransition();
+  const router = useRouter();
 
-  const copyShareLink = React.useCallback(async (chat: Chat) => {
+  const copyShareLink = useCallback(async (chat: Chat) => {
     if (!chat.sharePath) {
-      return toast.error('Could not copy share link to clipboard')
+      return toast.error("No s'ha pogut copiar l'enllaç 😓");
     }
 
-    const url = new URL(window.location.href)
-    url.pathname = chat.sharePath
-    navigator.clipboard.writeText(url.toString())
-    setShareDialogOpen(false)
-    toast.success('Share link copied to clipboard', {
+    const url = new URL(window.location.href);
+    url.pathname = chat.sharePath;
+    navigator.clipboard.writeText(url.toString());
+    setShareDialogOpen(false);
+    toast.success("Enllaç copiat amb èxit 🥳", {
       style: {
-        borderRadius: '10px',
-        background: '#333',
-        color: '#fff',
-        fontSize: '14px'
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+        fontSize: "14px",
       },
       iconTheme: {
-        primary: 'white',
-        secondary: 'black'
-      }
-    })
-  }, [])
+        primary: "white",
+        secondary: "black",
+      },
+    });
+  }, []);
 
   return (
     <>
@@ -90,10 +90,10 @@ export function SidebarActions({
               onClick={() => setShareDialogOpen(true)}
             >
               <IconShare />
-              <span className="sr-only">Share</span>
+              <span className="sr-only">Compartir</span>
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Share chat</TooltipContent>
+          <TooltipContent>Compartir el xat</TooltipContent>
         </Tooltip>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -104,25 +104,25 @@ export function SidebarActions({
               onClick={() => setDeleteDialogOpen(true)}
             >
               <IconTrash />
-              <span className="sr-only">Delete</span>
+              <span className="sr-only">Eliminar</span>
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Delete chat</TooltipContent>
+          <TooltipContent>Eliminar el xat</TooltipContent>
         </Tooltip>
       </div>
       <Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Share link to chat</DialogTitle>
+            <DialogTitle>Compartir enllaç al xat</DialogTitle>
             <DialogDescription>
-              Anyone with the URL will be able to view the shared chat.
+              Qualsevol persona amb l&amp;enllaç podrà veure el xat.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-1 rounded-md border p-4 text-sm">
             <div className="font-medium">{chat.title}</div>
             <div className="text-muted-foreground">
-              {formatDate(Number(chat.createdAt))} · {chat.messages.length}{' '}
-              messages
+              {formatDate(Number(chat.createdAt))} · {chat.messages.length}{" "}
+              missatges
             </div>
           </div>
           <DialogFooter className="items-center">
@@ -130,8 +130,8 @@ export function SidebarActions({
               <Link
                 href={chat.sharePath}
                 className={cn(
-                  badgeVariants({ variant: 'secondary' }),
-                  'mr-auto'
+                  badgeVariants({ variant: "secondary" }),
+                  "mr-auto",
                 )}
                 target="_blank"
               >
@@ -144,29 +144,29 @@ export function SidebarActions({
               onClick={() => {
                 startShareTransition(async () => {
                   if (chat.sharePath) {
-                    await new Promise(resolve => setTimeout(resolve, 500))
-                    copyShareLink(chat)
-                    return
+                    await new Promise((resolve) => setTimeout(resolve, 500));
+                    copyShareLink(chat);
+                    return;
                   }
 
-                  const result = await shareChat(chat)
+                  const result = await shareChat(chat);
 
-                  if (result && 'error' in result) {
-                    toast.error(result.error)
-                    return
+                  if (result && "error" in result) {
+                    toast.error(result.error);
+                    return;
                   }
 
-                  copyShareLink(result)
-                })
+                  copyShareLink(result);
+                });
               }}
             >
               {isSharePending ? (
                 <>
                   <IconSpinner className="mr-2 animate-spin" />
-                  Copying...
+                  Copiant...
                 </>
               ) : (
-                <>Copy link</>
+                <>Copiar enllaç</>
               )}
             </Button>
           </DialogFooter>
@@ -175,44 +175,44 @@ export function SidebarActions({
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogTitle>Estàs completament segur?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will permanently delete your chat message and remove your
-              data from our servers.
+              Aquesta acció eliminarà permanentment el xat dels nostres
+              servidors.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isRemovePending}>
-              Cancel
+              Cancel·lar
             </AlertDialogCancel>
             <AlertDialogAction
               disabled={isRemovePending}
-              onClick={event => {
-                event.preventDefault()
+              onClick={(event) => {
+                event.preventDefault();
                 startRemoveTransition(async () => {
                   const result = await removeChat({
                     id: chat.id,
-                    path: chat.path
-                  })
+                    path: chat.path,
+                  });
 
-                  if (result && 'error' in result) {
-                    toast.error(result.error)
-                    return
+                  if (result && "error" in result) {
+                    toast.error(result.error);
+                    return;
                   }
 
-                  setDeleteDialogOpen(false)
-                  router.refresh()
-                  router.push('/')
-                  toast.success('Chat deleted')
-                })
+                  setDeleteDialogOpen(false);
+                  router.refresh();
+                  router.push("/");
+                  toast.success("Xat eliminat 🗑️");
+                });
               }}
             >
               {isRemovePending && <IconSpinner className="mr-2 animate-spin" />}
-              Delete
+              Eliminar
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
     </>
-  )
+  );
 }
