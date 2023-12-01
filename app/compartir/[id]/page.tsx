@@ -1,31 +1,31 @@
-import { type Metadata } from "next";
-import { notFound } from "next/navigation";
+import { type Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
-import { formatDate } from "@/lib/utils";
-import { getSharedChat } from "@/app/actions";
-import { ChatList } from "@/components/chat-list";
+import { getSharedChat } from '@/app/actions'
+import { ChatList } from '@/components/chat-list'
+import { formatDate } from '@/lib/utils'
 
 interface SharePageProps {
   params: {
-    id: string;
-  };
+    id: string
+  }
 }
 
 export async function generateMetadata({
-  params,
+  params
 }: SharePageProps): Promise<Metadata> {
-  const chat = await getSharedChat(params.id);
+  const chat = await getSharedChat(params.id)
 
   return {
-    title: chat?.title.slice(0, 50) ?? "Xat",
-  };
+    title: chat?.title.slice(0, 50) ?? 'Xat'
+  }
 }
 
 export default async function SharePage({ params }: SharePageProps) {
-  const chat = await getSharedChat(params.id);
+  const chat = await getSharedChat(params.id)
 
   if (!chat || !chat?.sharePath) {
-    notFound();
+    notFound()
   }
 
   return (
@@ -35,12 +35,13 @@ export default async function SharePage({ params }: SharePageProps) {
           <div className="space-y-1 md:-mx-8">
             <h1 className="text-2xl font-bold">{chat.title}</h1>
             <div className="text-sm text-muted-foreground">
-              {formatDate(chat.createdAt)} · {chat.messages.length} missatges
+              {formatDate(Date(chat.createdAt))} · {chat.messages.length}{' '}
+              missatges
             </div>
           </div>
         </div>
       </div>
       <ChatList messages={chat.messages} />
     </div>
-  );
+  )
 }
