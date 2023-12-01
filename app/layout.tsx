@@ -17,7 +17,7 @@ export const metadata = {
   description:
     'Xerra amb en Tomeu PenIA, una experiència única de conversa virtual.',
   icons: {
-    icon: '/favicon.svg'
+    icon: '/favicon.png'
   }
 }
 
