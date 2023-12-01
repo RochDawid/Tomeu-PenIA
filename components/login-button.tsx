@@ -1,36 +1,35 @@
-"use client";
+'use client'
 
-import * as React from "react";
-import { signIn } from "next-auth/react";
+import { signIn } from 'next-auth/react'
+import * as React from 'react'
 
-import { cn } from "@/lib/utils";
-import { Button, type ButtonProps } from "@/components/ui/button";
-import { IconSpinner } from "@/components/ui/icons";
+import { Button, type ButtonProps } from '@/components/ui/button'
+import { IconSpinner } from '@/components/ui/icons'
+import { cn } from '@/lib/utils'
 
 interface LoginButtonProps extends ButtonProps {
-  text?: string;
+  text?: string
 }
 
 export function LoginButton({
-  text = "Accedeix amb Google",
+  text = 'Accedeix amb Google',
   className,
   ...props
 }: LoginButtonProps) {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false)
 
   return (
     <Button
-      variant="link"
       onClick={() => {
-        setIsLoading(true);
-        signIn("google", { callbackUrl: "/" });
+        setIsLoading(true)
+        signIn('google', { callbackUrl: '/' })
       }}
       disabled={isLoading}
-      className={`${cn("-mr-2", className)}`}
+      className={`${cn('mr-2', className)}`}
       {...props}
     >
       {isLoading && <IconSpinner className="mr-2 animate-spin" />}
       {text}
     </Button>
-  );
+  )
 }
