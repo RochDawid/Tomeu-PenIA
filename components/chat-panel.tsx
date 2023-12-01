@@ -57,7 +57,7 @@ export function ChatPanel({
             )
           )}
         </div>
-        <div className="space-y-4 border-t bg-background px-4 py-2 shadow-lg sm:rounded-t-xl sm:border md:py-4">
+        <div className="space-y-4 border bg-background p-4 shadow-lg rounded-t-xl">
           <PromptForm
             onSubmit={async value => {
               await append({
@@ -70,15 +70,13 @@ export function ChatPanel({
             setInput={setInput}
             isLoading={isLoading}
           />
-          <div className="hidden sm:block">
-            <p className="text-center text-xs leading-normal text-muted-foreground">
-              Fet amb ❤️ per{' '}
-              <ExternalLink href="https://www.linkedin.com/in/dawid-roch/">
-                Dawid Roch
-              </ExternalLink>
-              .
-            </p>
-          </div>
+          <p className="text-center text-xs leading-normal text-muted-foreground">
+            Fet amb ❤️ per{' '}
+            <ExternalLink href="https://www.linkedin.com/in/dawid-roch/">
+              Dawid Roch
+            </ExternalLink>
+            .
+          </p>
         </div>
       </div>
     </div>

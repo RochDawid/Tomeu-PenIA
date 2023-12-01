@@ -47,7 +47,7 @@ export function PromptForm({
       }}
       ref={formRef}
     >
-      <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background px-8 sm:rounded-md sm:border sm:px-12">
+      <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background rounded-md border px-12">
         <Tooltip>
           <TooltipTrigger asChild>
             <button
@@ -58,7 +58,7 @@ export function PromptForm({
               }}
               className={cn(
                 buttonVariants({ size: 'sm', variant: 'outline' }),
-                'absolute left-0 top-4 h-8 w-8 rounded-full bg-background p-0 sm:left-4'
+                'absolute left-4 top-4 h-8 w-8 rounded-full bg-background p-0'
               )}
             >
               <IconPlus />
@@ -74,11 +74,11 @@ export function PromptForm({
           rows={1}
           value={input}
           onChange={e => setInput(e.target.value)}
-          placeholder="Pots demanar-li que te canti D'una gatera me vaig casar."
+          placeholder="Demana-li qui és o quina és la seva cançó preferida..."
           spellCheck={false}
-          className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
+          className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none text-sm"
         />
-        <div className="absolute right-0 top-4 sm:right-4">
+        <div className="absolute top-4 right-4">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
