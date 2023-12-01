@@ -41,7 +41,8 @@ export async function POST(req: Request) {
     async onCompletion(completion) {
       const title = json.messages[0].content.substring(0, 10)
       const id = json.id ?? nanoid()
-      const createdAt = Date.now()
+      const createdAtScore = Date.now()
+      const createdAt = new Date(createdAtScore)
       const path = `/xat/${id}`
       const payload = {
         id,
@@ -59,7 +60,7 @@ export async function POST(req: Request) {
       }
       await kv.hmset(`chat:${id}`, payload)
       await kv.zadd(`user:chat:${userId}`, {
-        score: createdAt,
+        score: createdAtScore,
         member: `chat:${id}`
       })
     }
