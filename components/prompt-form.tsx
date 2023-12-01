@@ -12,7 +12,6 @@ import {
 import { useEnterSubmit } from '@/lib/hooks/use-enter-submit'
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
-import { ExternalLink } from './external-link'
 
 export interface PromptProps
   extends Pick<UseChatHelpers, 'input' | 'setInput'> {
@@ -95,13 +94,6 @@ export function PromptForm({
           </Tooltip>
         </div>
       </div>
-      <p className="pt-4 text-center text-xs leading-normal text-muted-foreground">
-        Fet amb ❤️ per{' '}
-        <ExternalLink href="https://www.linkedin.com/in/dawid-roch/">
-          Dawid Roch
-        </ExternalLink>
-        .
-      </p>
     </form>
   )
 }

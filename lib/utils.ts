@@ -33,7 +33,9 @@ export async function fetcher<JSON = any>(
   return res.json()
 }
 
-export function formatDate(date: Date): string {
+export function formatDate(input: Date | number | string): string {
+  const date = new Date(input)
+
   return date.toLocaleDateString('ca', {
     month: 'long',
     day: 'numeric',

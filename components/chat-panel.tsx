@@ -1,22 +1,23 @@
-import { type UseChatHelpers } from "ai/react";
+import { type UseChatHelpers } from 'ai/react'
 
-import { Button } from "@/components/ui/button";
-import { PromptForm } from "@/components/prompt-form";
-import { ButtonScrollToBottom } from "@/components/button-scroll-to-bottom";
-import { IconRefresh, IconStop } from "@/components/ui/icons";
+import { ButtonScrollToBottom } from '@/components/button-scroll-to-bottom'
+import { PromptForm } from '@/components/prompt-form'
+import { Button } from '@/components/ui/button'
+import { IconRefresh, IconStop } from '@/components/ui/icons'
+import { ExternalLink } from './external-link'
 
 export interface ChatPanelProps
   extends Pick<
     UseChatHelpers,
-    | "append"
-    | "isLoading"
-    | "reload"
-    | "messages"
-    | "stop"
-    | "input"
-    | "setInput"
+    | 'append'
+    | 'isLoading'
+    | 'reload'
+    | 'messages'
+    | 'stop'
+    | 'input'
+    | 'setInput'
   > {
-  id?: string;
+  id?: string
 }
 
 export function ChatPanel({
@@ -27,7 +28,7 @@ export function ChatPanel({
   reload,
   input,
   setInput,
-  messages,
+  messages
 }: ChatPanelProps) {
   return (
     <div className="fixed inset-x-0 bottom-0 bg-gradient-to-b from-muted/10 from-10% to-muted/30 to-50%">
@@ -58,19 +59,28 @@ export function ChatPanel({
         </div>
         <div className="space-y-4 border-t bg-background px-4 py-2 shadow-lg sm:rounded-t-xl sm:border md:py-4">
           <PromptForm
-            onSubmit={async (value) => {
+            onSubmit={async value => {
               await append({
                 id,
                 content: value,
-                role: "user",
-              });
+                role: 'user'
+              })
             }}
             input={input}
             setInput={setInput}
             isLoading={isLoading}
           />
+          <div className="hidden sm:block">
+            <p className="text-center text-xs leading-normal text-muted-foreground">
+              Fet amb ❤️ per{' '}
+              <ExternalLink href="https://www.linkedin.com/in/dawid-roch/">
+                Dawid Roch
+              </ExternalLink>
+              .
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

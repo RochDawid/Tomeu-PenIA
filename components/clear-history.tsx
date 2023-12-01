@@ -1,7 +1,6 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import * as React from 'react'
 import { toast } from 'react-hot-toast'
 
 import {
@@ -18,14 +17,15 @@ import {
 import { Button } from '@/components/ui/button'
 import { IconSpinner } from '@/components/ui/icons'
 import { ServerActionResult } from '@/lib/types'
+import { useState, useTransition } from 'react'
 
 interface ClearHistoryProps {
   clearChats: () => ServerActionResult<void>
 }
 
 export function ClearHistory({ clearChats }: ClearHistoryProps) {
-  const [open, setOpen] = React.useState(false)
-  const [isPending, startTransition] = React.useTransition()
+  const [open, setOpen] = useState(false)
+  const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
   return (
@@ -60,6 +60,8 @@ export function ClearHistory({ clearChats }: ClearHistoryProps) {
 
                 setOpen(false)
                 router.push('/')
+                router.refresh()
+                toast.success('Xats eliminats')
               })
             }}
           >
