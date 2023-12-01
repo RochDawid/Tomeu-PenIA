@@ -35,7 +35,7 @@ export default async function SharePage({ params }: SharePageProps) {
           <div className="space-y-1 md:-mx-8">
             <h1 className="text-2xl font-bold">{chat.title}</h1>
             <div className="text-sm text-muted-foreground">
-              {formatDate(Date(chat.createdAt))} · {chat.messages.length}{' '}
+              {formatDate(new Date(chat.createdAt))} · {chat.messages.length}{' '}
               missatges
             </div>
           </div>
